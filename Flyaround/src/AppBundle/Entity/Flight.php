@@ -14,6 +14,29 @@ use Doctrine\ORM\Mapping as ORM;
 class Flight
 {
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\PlaneModel", inversedBy="plane_id")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $plane;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="pilot_id")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $pilot;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Site", inversedBy="arrival_id")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $arrival;
+
+    public function __toString()
+    {
+        return $this->departure . " - " . $this->arrival;
+    }
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Site", inversedBy="departures")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -248,5 +271,77 @@ class Flight
     public function getDeparture()
     {
         return $this->departure;
+    }
+
+    /**
+     * Set plane
+     *
+     * @param \AppBundle\Entity\PlaneModel $plane
+     *
+     * @return Flight
+     */
+    public function setPlane(\AppBundle\Entity\PlaneModel $plane)
+    {
+        $this->plane = $plane;
+
+        return $this;
+    }
+
+    /**
+     * Get plane
+     *
+     * @return \AppBundle\Entity\PlaneModel
+     */
+    public function getPlane()
+    {
+        return $this->plane;
+    }
+
+    /**
+     * Set pilot
+     *
+     * @param \AppBundle\Entity\User $pilot
+     *
+     * @return Flight
+     */
+    public function setPilot(\AppBundle\Entity\User $pilot)
+    {
+        $this->pilot = $pilot;
+
+        return $this;
+    }
+
+    /**
+     * Get pilot
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getPilot()
+    {
+        return $this->pilot;
+    }
+
+    /**
+     * Set arrival
+     *
+     * @param \AppBundle\Entity\Site $arrival
+     *
+     * @return Flight
+     */
+    public function setArrival(\AppBundle\Entity\Site $arrival)
+    {
+        $this->arrival = $arrival;
+
+        return $this;
+    }
+
+    /**
+     * Get arrival
+     *
+     * @return \AppBundle\Entity\Site
+     */
+    public function getArrival()
+    {
+        return $this->arrival;
     }
 }

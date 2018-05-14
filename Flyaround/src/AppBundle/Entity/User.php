@@ -289,4 +289,52 @@ class User
     {
         return $this->departure;
     }
+
+    /**
+     * Set reviewAuthor
+     *
+     * @param \AppBundle\Entity\User $reviewAuthor
+     *
+     * @return User
+     */
+    public function setReviewAuthor(\AppBundle\Entity\User $reviewAuthor)
+    {
+        $this->reviewAuthor = $reviewAuthor;
+
+        return $this;
+    }
+
+    /**
+     * Get reviewAuthor
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getReviewAuthor()
+    {
+        return $this->reviewAuthor;
+    }
+
+    /**
+     * Set userRated
+     *
+     * @param \AppBundle\Entity\User $userRated
+     *
+     * @return User
+     */
+    public function setUserRated(\AppBundle\Entity\User $userRated)
+    {
+        $this->userRated = $userRated;
+
+        return $this;
+    }
+
+    /**
+     * Get userRated
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUserRated()
+    {
+        return $this->userRated;
+    }
 }
