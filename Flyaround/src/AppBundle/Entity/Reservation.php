@@ -12,22 +12,26 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Reservation
 {
+    /*
+     * Adding personel methods / variables
+     */
+    public function __toString()
+    {
+        // Return the Site object with "[ID]" format, when __toString is called.
+        return $this->id . " ";
+    }
+
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Flight", inversedBy="flight_id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Flight", inversedBy="flights")
      * @ORM\JoinColumn(nullable=false)
      */
     private $flight;
-    
+
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="passenger_id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="passengers")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Passenger;
-
-    public function __toString()
-    {
-        return $this->id;
-    }
+    private $passenger;
 
     /**
      * @var int
@@ -143,6 +147,30 @@ class Reservation
     }
 
     /**
+     * Set passenger
+     *
+     * @param \AppBundle\Entity\User $passenger
+     *
+     * @return Reservation
+     */
+    public function setPassenger(\AppBundle\Entity\User $passenger)
+    {
+        $this->passenger = $passenger;
+
+        return $this;
+    }
+
+    /**
+     * Get passenger
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getPassenger()
+    {
+        return $this->passenger;
+    }
+
+    /**
      * Set flight
      *
      * @param \AppBundle\Entity\Flight $flight
@@ -164,29 +192,5 @@ class Reservation
     public function getFlight()
     {
         return $this->flight;
-    }
-
-    /**
-     * Set passenger
-     *
-     * @param \AppBundle\Entity\User $passenger
-     *
-     * @return Reservation
-     */
-    public function setPassenger(\AppBundle\Entity\User $passenger)
-    {
-        $this->Passenger = $passenger;
-
-        return $this;
-    }
-
-    /**
-     * Get passenger
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getPassenger()
-    {
-        return $this->Passenger;
     }
 }

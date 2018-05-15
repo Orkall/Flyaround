@@ -12,17 +12,24 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Site
 {
+    /*
+     * Adding personel methods / variables
+     */
+    public function __toString()
+    {
+        // Return the Site object with "[ICAO] - [NAME] [CITY]" format, when __toString is called.
+        return $this->icao . " - " . $this->name . " - " . $this->city;
+    }
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Flight", mappedBy="departure")
      */
     private $departures;
 
-    public function __toString()
-    {
-        return $this->icao . " - " . $this->name . " " . $this->city;
-    }
-
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Flight", mappedBy="arrival")
+     */
+    private $arrivals;
 
     /**
      * @var int
@@ -194,6 +201,7 @@ class Site
      *
      * @return string
      */
+
     public function getCity()
     {
         return $this->city;
@@ -201,6 +209,7 @@ class Site
     /**
      * Constructor
      */
+
     public function __construct()
     {
         $this->departures = new \Doctrine\Common\Collections\ArrayCollection();
@@ -213,6 +222,7 @@ class Site
      *
      * @return Site
      */
+
     public function addDeparture(\AppBundle\Entity\Flight $departure)
     {
         $this->departures[] = $departure;
@@ -238,5 +248,39 @@ class Site
     public function getDepartures()
     {
         return $this->departures;
+    }
+
+    /**
+     * Add arrival
+     *
+     * @param \AppBundle\Entity\Flight $arrival
+     *
+     * @return Site
+     */
+    public function addArrival(\AppBundle\Entity\Flight $arrival)
+    {
+        $this->arrivals[] = $arrival;
+
+        return $this;
+    }
+
+    /**
+     * Remove arrival
+     *
+     * @param \AppBundle\Entity\Flight $arrival
+     */
+    public function removeArrival(\AppBundle\Entity\Flight $arrival)
+    {
+        $this->arrivals->removeElement($arrival);
+    }
+
+    /**
+     * Get arrivals
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getArrivals()
+    {
+        return $this->arrivals;
     }
 }

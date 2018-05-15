@@ -12,22 +12,30 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User
 {
-
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="review_author_id")
-     * @ORM\JoinColumn(nullable=false)
+    /*
+     * Adding personel methods / variables
      */
-    private $reviewAuthor;
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="user_rated_id")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $userRated;
 
     public function __toString()
     {
-        return $this->firstName . " - " . $this->lastName;
+        // Return the Site object with "[LASTNAME] [FIRSTNAME]" format, when __toString is called.
+        return $this->lastName . $this->firstName;
     }
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Reservation", mappedBy="passenger")
+     */
+    private $passengers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Flight", mappedBy="pilot")
+     */
+    private $pilots;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Review", mappedBy="reviewAuthor")
+     */
+    private $reviewAuthors;
 
     /**
      * @var int
@@ -83,10 +91,9 @@ class User
     /**
      * @var bool
      *
-     * @ORM\Column(name="isACertifiedPilot", type="boolean")
+     * @ORM\Column(name="isCertifiedPilot", type="boolean")
      */
-    private $isACertifiedPilot;
-
+    private $isCertifiedPilot;
 
     /**
      * Get id
@@ -243,98 +250,135 @@ class User
     }
 
     /**
-     * Set isACertifiedPilot
+     * Set isCertifiedPilot
      *
-     * @param boolean $isACertifiedPilot
+     * @param boolean $isCertifiedPilot
      *
      * @return User
      */
-    public function setIsACertifiedPilot($isACertifiedPilot)
+    public function setIsCertifiedPilot($isCertifiedPilot)
     {
-        $this->isACertifiedPilot = $isACertifiedPilot;
+        $this->isCertifiedPilot = $isCertifiedPilot;
 
         return $this;
     }
 
     /**
-     * Get isACertifiedPilot
+     * Get isCertifiedPilot
      *
      * @return bool
      */
-    public function getIsACertifiedPilot()
+    public function getIsCertifiedPilot()
     {
-        return $this->isACertifiedPilot;
+        return $this->isCertifiedPilot;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reviewAuthors = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Set departure
+     * Add reviewAuthor
      *
-     * @param \AppBundle\Entity\Review $departure
+     * @param \AppBundle\Entity\Review $reviewAuthor
      *
      * @return User
      */
-    public function setDeparture(\AppBundle\Entity\Review $departure)
+    public function addReviewAuthor(\AppBundle\Entity\Review $reviewAuthor)
     {
-        $this->departure = $departure;
+        $this->reviewAuthors[] = $reviewAuthor;
 
         return $this;
     }
 
     /**
-     * Get departure
+     * Remove reviewAuthor
      *
-     * @return \AppBundle\Entity\Review
+     * @param \AppBundle\Entity\Review $reviewAuthor
      */
-    public function getDeparture()
+    public function removeReviewAuthor(\AppBundle\Entity\Review $reviewAuthor)
     {
-        return $this->departure;
+        $this->reviewAuthors->removeElement($reviewAuthor);
     }
 
     /**
-     * Set reviewAuthor
+     * Get reviewAuthors
      *
-     * @param \AppBundle\Entity\User $reviewAuthor
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReviewAuthors()
+    {
+        return $this->reviewAuthors;
+    }
+
+    /**
+     * Add pilot
+     *
+     * @param \AppBundle\Entity\Flight $pilot
      *
      * @return User
      */
-    public function setReviewAuthor(\AppBundle\Entity\User $reviewAuthor)
+    public function addPilot(\AppBundle\Entity\Flight $pilot)
     {
-        $this->reviewAuthor = $reviewAuthor;
+        $this->pilots[] = $pilot;
 
         return $this;
     }
 
     /**
-     * Get reviewAuthor
+     * Remove pilot
      *
-     * @return \AppBundle\Entity\User
+     * @param \AppBundle\Entity\Flight $pilot
      */
-    public function getReviewAuthor()
+    public function removePilot(\AppBundle\Entity\Flight $pilot)
     {
-        return $this->reviewAuthor;
+        $this->pilots->removeElement($pilot);
     }
 
     /**
-     * Set userRated
+     * Get pilots
      *
-     * @param \AppBundle\Entity\User $userRated
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPilots()
+    {
+        return $this->pilots;
+    }
+
+    /**
+     * Add passenger
+     *
+     * @param \AppBundle\Entity\Reservation $passenger
      *
      * @return User
      */
-    public function setUserRated(\AppBundle\Entity\User $userRated)
+    public function addPassenger(\AppBundle\Entity\Reservation $passenger)
     {
-        $this->userRated = $userRated;
+        $this->passengers[] = $passenger;
 
         return $this;
     }
 
     /**
-     * Get userRated
+     * Remove passenger
      *
-     * @return \AppBundle\Entity\User
+     * @param \AppBundle\Entity\Reservation $passenger
      */
-    public function getUserRated()
+    public function removePassenger(\AppBundle\Entity\Reservation $passenger)
     {
-        return $this->userRated;
+        $this->passengers->removeElement($passenger);
+    }
+
+    /**
+     * Get passengers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPassengers()
+    {
+        return $this->passengers;
     }
 }
