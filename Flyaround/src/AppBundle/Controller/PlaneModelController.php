@@ -91,7 +91,7 @@ class PlaneModelController extends Controller
             return $this->redirectToRoute('planemodel_edit', array('id' => $planeModel->getId()));
         }
 
-        return $this->render('planemodel/edit.html.twig', array(
+        return $this->render('planemodel/new.html.twig', array(
             'planeModel' => $planeModel,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

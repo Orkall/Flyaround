@@ -91,7 +91,7 @@ class ReservationController extends Controller
             return $this->redirectToRoute('reservation_edit', array('id' => $reservation->getId()));
         }
 
-        return $this->render('reservation/edit.html.twig', array(
+        return $this->render('reservation/new.html.twig', array(
             'reservation' => $reservation,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

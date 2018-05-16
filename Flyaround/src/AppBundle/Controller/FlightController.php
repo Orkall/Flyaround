@@ -91,7 +91,7 @@ class FlightController extends Controller
             return $this->redirectToRoute('flight_edit', array('id' => $flight->getId()));
         }
 
-        return $this->render('flight/edit.html.twig', array(
+        return $this->render('flight/new.html.twig', array(
             'flight' => $flight,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
