@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: thibault1serre
- * Date: 14/05/18
- * Time: 15:10
- */
 
 namespace AppBundle\Controller;
 
@@ -22,6 +16,7 @@ use AppBundle\Entity\Reservation;
  *
  * @Route("listing")
  */
+
 class ListingController extends Controller
 {
     /**
@@ -42,3 +37,5 @@ class ListingController extends Controller
         ));
     }
 }
+
+
